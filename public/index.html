@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ReelTeach — Your AI Teacher</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+  <div id="app">
+
+    <!-- ===== FIXED AVATAR — Top Right Corner ===== -->
+    <div id="fixedAvatar">
+      <svg viewBox="0 0 200 200" width="110" height="110">
+        <ellipse cx="100" cy="108" rx="68" ry="78" fill="#f2c9a0" />
+        <path d="M 35 92 Q 28 18 100 14 Q 172 18 165 92 Q 165 48 100 44 Q 35 48 35 92 Z" fill="#3a2a1a" />
+        <circle id="eyeL" cx="75" cy="100" r="8" fill="#1e1a2b" />
+        <circle id="eyeR" cx="125" cy="100" r="8" fill="#1e1a2b" />
+        <path d="M 62 85 Q 75 78 88 85" stroke="#3a2a1a" stroke-width="3" fill="none" stroke-linecap="round" />
+        <path d="M 112 85 Q 125 78 138 85" stroke="#3a2a1a" stroke-width="3" fill="none" stroke-linecap="round" />
+        <ellipse cx="72" cy="118" rx="10" ry="6" fill="#e8a97a" opacity="0.5" />
+        <ellipse cx="128" cy="118" rx="10" ry="6" fill="#e8a97a" opacity="0.5" />
+        <path id="avatarMouth" d="M 82 138 Q 100 136 118 138" fill="#7a2e2e" stroke="#5a1e1e" stroke-width="2" />
+      </svg>
+      <div id="avatarStatus">Ready</div>
+    </div>
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside id="sidebar">
+      <div class="sidebar-inner">
+        <div class="sidebar-header">
+          <span class="logo">🎬 ReelTeach</span>
+          <span class="tagline">Your AI Teacher</span>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-number" id="statProgress">0%</span>
+            <span class="stat-label">complete</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" id="statScore">—</span>
+            <span class="stat-label">score</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" id="statConcepts">0</span>
+            <span class="stat-label">concepts</span>
+          </div>
+        </div>
+
+        <div id="lessonProgress">
+          <div class="empty-state">
+            <span class="empty-icon">📖</span>
+            <p>Start a lesson —<br />your progress appears here</p>
+          </div>
+        </div>
+
+        <div class="legend">
+          <span><span class="dot active"></span> Current</span>
+          <span><span class="dot correct"></span> Mastered</span>
+          <span><span class="dot struggled"></span> Review</span>
+          <span><span class="dot upcoming"></span> Upcoming</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ===== MAIN ===== -->
+    <main id="mainContent">
+
+      <!-- ===== SETUP ===== -->
+      <div id="setupScreen" class="screen active">
+        <div class="setup-wrapper">
+          <div class="setup-card">
+            <div class="setup-greeting">
+              <h1>What do you want to learn today?</h1>
+              <p>Upload material or pick a topic — I'll create a personalized lesson just for you.</p>
+            </div>
+
+            <div class="quick-topics">
+              <span class="quick-label">Try these:</span>
+              <button class="pill" data-topic="Ohm's Law">⚡ Ohm's Law</button>
+              <button class="pill" data-topic="Machine Learning">🤖 ML Basics</button>
+              <button class="pill" data-topic="React Hooks">⚛️ React Hooks</button>
+              <button class="pill" data-topic="Photosynthesis">🌿 Photosynthesis</button>
+            </div>
+
+            <div class="divider">or</div>
+
+            <div class="field">
+              <label for="topicInput">Enter a topic</label>
+              <input type="text" id="topicInput" placeholder="e.g., Quantum Physics, JavaScript, History"
+                aria-label="Enter a topic" />
+            </div>
+
+            <div class="divider">or</div>
+
+            <div class="upload-zone" id="uploadZone">
+              <span class="upload-icon">📄</span>
+              <p>Drag & drop a PDF, TXT, DOCX, or PPTX file</p>
+              <input type="file" id="fileInput" accept=".pdf,.txt,.docx,.pptx" />
+              <small id="fileName"></small>
+            </div>
+
+            <div class="options-row">
+              <div class="field">
+                <label for="levelInput">🎯 Level</label>
+                <select id="levelInput">
+                  <option value="beginner">Beginner</option>
+                  <option value="intermediate" selected>Intermediate</option>
+                  <option value="advanced">Advanced</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="timeInput">⏱️ Time</label>
+                <select id="timeInput">
+                  <option value="5">5 min</option>
+                  <option value="20" selected>20 min</option>
+                  <option value="60">60 min</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="languageInput">🌍 Language</label>
+                <select id="languageInput">
+                  <option value="English">English</option>
+                  <option value="Hindi">Hindi</option>
+                  <option value="Hinglish">Hinglish</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="personalityInput">🎭 Teacher Style</label>
+                <select id="personalityInput">
+                  <option value="friendly">😊 Friendly</option>
+                  <option value="strict">📏 Strict Professor</option>
+                  <option value="storyteller">📖 Storyteller</option>
+                </select>
+              </div>
+            </div>
+
+            <button id="startBtn" aria-label="Start Teaching">Start Teaching →</button>
+          </div>
+
+          <div class="setup-illustration">
+            <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="150" cy="120" r="80" fill="#F1EEE6" opacity="0.4" />
+              <circle cx="150" cy="120" r="50" fill="#C89B3C" opacity="0.15" />
+              <rect x="80" y="160" width="140" height="100" rx="6" fill="#171B2E" opacity="0.06" />
+              <rect x="90" y="170" width="120" height="80" rx="4" fill="#F1EEE6" stroke="#E2DCD2" stroke-width="1.5" />
+              <line x1="110" y1="190" x2="190" y2="190" stroke="#C89B3C" stroke-width="2" stroke-linecap="round" />
+              <line x1="110" y1="205" x2="180" y2="205" stroke="#C89B3C" stroke-width="2" stroke-linecap="round"
+                opacity="0.6" />
+              <line x1="110" y1="220" x2="170" y2="220" stroke="#C89B3C" stroke-width="2" stroke-linecap="round"
+                opacity="0.3" />
+              <rect x="140" y="40" width="20" height="30" rx="4" fill="#C89B3C" opacity="0.6" />
+              <path d="M120 70 L180 70 L160 110 L140 110 L120 70Z" fill="#C89B3C" opacity="0.3" />
+              <circle cx="230" cy="80" r="4" fill="#C89B3C" opacity="0.4" />
+              <circle cx="250" cy="110" r="3" fill="#C89B3C" opacity="0.25" />
+              <circle cx="60" cy="90" r="3" fill="#C89B3C" opacity="0.3" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== LESSON ===== -->
+      <div id="lessonScreen" class="screen">
+        <div id="lessonHeader">
+          <div>
+            <h1 id="lessonTitle">Lesson Title</h1>
+            <div class="meta">
+              <span id="lessonProgressText">0 / 0 sections</span>
+              <span id="lessonStatus" class="badge">In Progress</span>
+            </div>
+          </div>
+          <button class="btn-reset" id="resetBtn" title="Start over">↺</button>
+        </div>
+
+        <div id="lessonContent"></div>
+
+        <div id="reportContainer" style="display:none;"></div>
+      </div>
+
+      <!-- ===== LOADING ===== -->
+      <div id="loadingOverlay" class="overlay" style="display:none;">
+        <div class="loading-box">
+          <div class="spinner"></div>
+          <h2>Creating your lesson...</h2>
+          <p id="loadingMessage">Just a moment — I'm preparing something great</p>
+          <div class="loading-steps">
+            <span class="step" id="step1">📖 Reading material</span>
+            <span class="step" id="step2">🧠 Planning structure</span>
+            <span class="step" id="step3">✍️ Writing explanations</span>
+            <span class="step" id="step4">❓ Preparing questions</span>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+
+</html>
